@@ -306,6 +306,30 @@ function updateBookingTranslations() {
   }
 }
 
+// Show form messages
+function showFormMessage(message, type = '') {
+  const messageEl = document.getElementById('formMessage');
+  if (!message) {
+    messageEl.style.display = 'none';
+    messageEl.className = 'form-message';
+    messageEl.textContent = '';
+    return;
+  }
+  
+  messageEl.textContent = message;
+  messageEl.className = `form-message ${type}`;
+  messageEl.style.display = 'block';
+  
+  // Auto-hide error messages after 5 seconds
+  if (type === 'error') {
+    setTimeout(() => {
+      if (messageEl.textContent === message) {
+        showFormMessage('');
+      }
+    }, 5000);
+  }
+}
+
 // Function to apply gallery filter
 function applyGalleryFilter(apartmentId) {
   const filterBtn = document.querySelector(`[data-filter="${apartmentId}"]`);
@@ -677,30 +701,33 @@ async function handleRequestBooking() {
   const apt = getApartmentById(select.value);
   const { checkIn, checkOut, nights } = parseRange(picker?.selectedDates || []);
 
+  // Clear any previous messages
+  showFormMessage('');
+
   // Validation with specific messages
   if (!name) {
-    alert('Please enter your name.');
+    showFormMessage('Please enter your name.', 'error');
     document.getElementById('name').focus();
     return;
   }
   if (!email) {
-    alert('Please enter your email address.');
+    showFormMessage('Please enter your email address.', 'error');
     document.getElementById('email').focus();
     return;
   }
   if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-    alert('Please enter a valid email address.');
+    showFormMessage('Please enter a valid email address.', 'error');
     document.getElementById('email').focus();
     return;
   }
   if (nights <= 0) {
-    alert('Please select your check-in and check-out dates.');
+    showFormMessage('Please select your check-in and check-out dates.', 'error');
     document.getElementById('dateRange').focus();
     return;
   }
   if (nights < apt.minNights) {
-    const proceed = confirm(`The minimum stay for ${apt.name} is ${apt.minNights} nights. Continue anyway?`);
-    if (!proceed) return;
+    showFormMessage(`Note: The minimum stay for ${apt.name} is ${apt.minNights} nights.`, 'error');
+    return;
   }
 
   const { nightly, cleaning, subtotal, total } = computePrice(apt, nights);
@@ -743,24 +770,43 @@ async function handleRequestBooking() {
     
     if (response.status === 200) {
       // Success!
-      alert(currentLanguage === 'de' 
-        ? 'Ihre Buchungsanfrage wurde erfolgreich gesendet! Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.' 
-        : 'Your booking request has been sent successfully! We will contact you within 24 hours.');
+      showFormMessage(
+        currentLanguage === 'de' 
+          ? '✓ Ihre Buchungsanfrage wurde erfolgreich gesendet! Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.' 
+          : '✓ Your booking request has been sent successfully! We will contact you within 24 hours.',
+        'success'
+      );
       
-      // Clear form
-      document.getElementById('bookingForm').reset();
-      picker.clear();
-      updateSummary();
+      // Update button to show success
+      btn.textContent = currentLanguage === 'de' ? '✓ Gesendet!' : '✓ Sent!';
+      
+      // Clear form after a delay
+      setTimeout(() => {
+        document.getElementById('bookingForm').reset();
+        picker.clear();
+        updateSummary();
+        btn.textContent = originalText;
+        
+        // Keep success message visible for longer
+        setTimeout(() => {
+          showFormMessage('');
+        }, 10000); // Hide after 10 seconds
+      }, 2000);
     }
   } catch (error) {
     console.error('Email send failed:', error);
-    alert(currentLanguage === 'de'
-      ? 'Es gab ein Problem beim Senden Ihrer Anfrage. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.'
-      : 'There was a problem sending your request. Please try again or contact us directly.');
+    showFormMessage(
+      currentLanguage === 'de'
+        ? 'Es gab ein Problem beim Senden Ihrer Anfrage. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.'
+        : 'There was a problem sending your request. Please try again or contact us directly.',
+      'error'
+    );
   } finally {
     // Re-enable button
     btn.disabled = false;
-    btn.textContent = originalText;
+    if (!btn.textContent.includes('✓')) {
+      btn.textContent = originalText;
+    }
   }
 }
 
@@ -791,8 +837,14 @@ Sent from Haus Säuling website.`
   
   window.location.href = mailto;
   
+  // Show inline message instead of alert
   setTimeout(() => {
-    alert('Your email client should now be open with your booking request. Please send the email to complete your booking request. If your email client did not open, please email us directly at: ' + CONTACT_EMAIL);
+    showFormMessage(
+      currentLanguage === 'de'
+        ? `Ihr E-Mail-Programm sollte sich jetzt öffnen. Bitte senden Sie die E-Mail ab. Falls nicht, kontaktieren Sie uns direkt unter: ${CONTACT_EMAIL}`
+        : `Your email client should now be open. Please send the email to complete your booking. If not, email us directly at: ${CONTACT_EMAIL}`,
+      'success'
+    );
   }, 500);
 }
 
