@@ -32,8 +32,8 @@ const translations = {
     'nav.bookNow': 'Book now',
     
     // Hero
-    'hero.title': 'Alpine stays at Haus Säuling',
-    'hero.subtitle': 'Bright, modern Ferienwohnungen in the heart of the Allgäu.',
+    'hero.title': 'Royal holidays...',
+    'hero.subtitle': '... await you here with us in Schwangau',
     'hero.viewApartments': 'View apartments',
     'hero.checkAvailability': 'Check availability',
     
@@ -148,8 +148,8 @@ const translations = {
     'nav.bookNow': 'Jetzt buchen',
     
     // Hero
-    'hero.title': 'Alpine Auszeit im Haus Säuling',
-    'hero.subtitle': 'Helle, moderne Ferienwohnungen im Herzen des Allgäus.',
+    'hero.title': 'Königliche Ferien...',
+    'hero.subtitle': '... erwarten Sie hier bei uns in Schwangau.',
     'hero.viewApartments': 'Wohnungen ansehen',
     'hero.checkAvailability': 'Verfügbarkeit prüfen',
     
