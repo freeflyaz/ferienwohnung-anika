@@ -75,6 +75,9 @@ const translations = {
     'apartment.includesCleaning': 'Includes cleaning',
     'apartment.bookNow': 'Book now',
     'apartment.viewPhotos': 'View photos',
+    'apartment.minNightsText': 'Min',
+    'apartment.changeoverFlexible': 'Changeover flexible',
+    'apartment.pleaseExtendStay': 'Please extend stay',
     
     // Gallery filters
     'gallery.allPhotos': 'All Photos',
@@ -191,6 +194,9 @@ const translations = {
     'apartment.includesCleaning': 'Inkl. Endreinigung',
     'apartment.bookNow': 'Jetzt buchen',
     'apartment.viewPhotos': 'Fotos ansehen',
+    'apartment.minNightsText': 'Min',
+    'apartment.changeoverFlexible': 'Wechsel flexibel',
+    'apartment.pleaseExtendStay': 'Bitte Aufenthalt verlängern',
     
     // Gallery filters
     'gallery.allPhotos': 'Alle Fotos',
@@ -657,7 +663,7 @@ function initCalendar() {
     onReady: () => {
       const apt = getApartmentById(select.value);
       setDisabledDatesFor(apt);
-      help.textContent = `Min ${apt.minNights} nights · Changeover flexible`;
+      help.textContent = `${t('apartment.minNightsText')} ${apt.minNights} ${t('apartment.nights')} · ${t('apartment.changeoverFlexible')}`;
     },
     onChange: (selectedDates) => {
       updateSummary();
@@ -677,7 +683,7 @@ function updateSummary() {
 
   // enforce min nights visually (we don't block, but inform)
   const help = document.getElementById('dateHelp');
-  help.textContent = `Min ${apt.minNights} nights · Changeover flexible` + (nights > 0 && nights < apt.minNights ? ` · Please extend stay` : '');
+  help.textContent = `${t('apartment.minNightsText')} ${apt.minNights} ${t('apartment.nights')} · ${t('apartment.changeoverFlexible')}` + (nights > 0 && nights < apt.minNights ? ` · ${t('apartment.pleaseExtendStay')}` : '');
 
   const { nightly, cleaning, subtotal, total } = computePrice(apt, nights);
 
