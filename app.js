@@ -6,91 +6,42 @@
   - Price calculation and mailto request
 */
 
-const CONTACT_EMAIL = "info@example.com"; // TODO: replace
+const CONTACT_EMAIL = "ferienwohnung-anika@t-online.de";
 
-// Apartments configuration. Replace with your real data.
+// Apartments configuration – populated from scraped data (Seestadel)
 const APARTMENTS = [
   {
-    id: "studio",
-    name: "Studio",
-    short: "Sleeps 2 · 28 m²",
-    pricePerNight: 95,
-    cleaningFee: 35,
-    minNights: 2,
-    maxGuests: 2,
-    photos: [
-      {
-        src: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80",
-        alt: "Bright studio interior with cozy bedding"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=1200&q=80",
-        alt: "Compact kitchen detail"
-      }
-    ],
-    // Example blocked dates (ISO strings). Replace with real availability or leave empty
-    blockedDates: ["2025-08-15", "2025-08-16", "2025-12-24", "2025-12-31"],
-  },
-  {
-    id: "onebed",
-    name: "One‑Bedroom",
-    short: "Sleeps 3 · 42 m²",
-    pricePerNight: 125,
+    id: "seestadel",
+    name: "Seestadel – Seestraße",
+    short: "Sleeps 2 · 40 m²",
+    pricePerNight: 120,
     cleaningFee: 45,
     minNights: 3,
-    maxGuests: 3,
+    maxGuests: 2,
     photos: [
-      {
-        src: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80",
-        alt: "Living room with mountain view"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1600489000022-c66ab2e7b6d8?auto=format&fit=crop&w=1200&q=80",
-        alt: "Bedroom detail"
-      }
-    ],
-    blockedDates: ["2025-08-10", "2025-08-11", "2025-08-12"],
-  },
-  {
-    id: "family",
-    name: "Family Suite",
-    short: "Sleeps 4 · 58 m²",
-    pricePerNight: 159,
-    cleaningFee: 59,
-    minNights: 3,
-    maxGuests: 4,
-    photos: [
-      {
-        src: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1200&q=80",
-        alt: "Spacious family room"
-      },
-      {
-        src: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?auto=format&fit=crop&w=1200&q=80",
-        alt: "Dining area"
-      }
+      { src: "assets/seestadel/img-01.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-02.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-03.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-04.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-05.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-06.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-07.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-08.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-09.jpg", alt: "Seestadel – Seestraße" },
+      { src: "assets/seestadel/img-10.jpg", alt: "Seestadel – Seestraße" }
     ],
     blockedDates: [],
+    description: "* Die Preise gelten für 1-2 Personen incl. Endreinigung: Ferienwohnung \"Seestadel\" (Fewo für 1-3 Personen (46qm) im 1.Stock) - 1 Schlafzimmer + Ausziehcouch im Wohnzimmer Hauptsaison 2025 125 €/Nacht für 1-2 Personen",
+    source: "https://ferienwohnung-anika.de/Unsere-Wohnungen/Seestadel-in-der-Seestrasse",
   }
 ];
 
-// Additional surrounding/area images (Unsplash placeholders)
+// Additional surrounding/area images – use local photos for demo
 const AREA_PHOTOS = [
-  {
-    src: "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80",
-    alt: "Alpine lake at golden hour"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?auto=format&fit=crop&w=1200&q=80",
-    alt: "Mountain peaks in the Alps"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1517824806704-9040b037703b?auto=format&fit=crop&w=1200&q=80",
-    alt: "Forest path near the mountains"
-  },
-  {
-    src: "https://images.unsplash.com/photo-1464823063530-08f10ed1a2dd?auto=format&fit=crop&w=1200&q=80",
-    alt: "Rolling alpine meadows"
-  }
+  { src: "assets/seestadel/img-01.jpg", alt: "Seestadel – view" },
+  { src: "assets/seestadel/img-02.jpg", alt: "Seestadel – balcony" },
+  { src: "assets/seestadel/img-08.jpg", alt: "Seestadel – living room" },
+  { src: "assets/seestadel/img-09.jpg", alt: "Seestadel – bathroom" },
 ];
 
 // ------- Helpers -------
@@ -112,6 +63,13 @@ function formatDateRange(checkIn, checkOut) {
   if (!checkIn || !checkOut) return "–";
   const fmt = new Intl.DateTimeFormat("de-DE", { day: "2-digit", month: "2-digit", year: "numeric" });
   return `${fmt.format(checkIn)} → ${fmt.format(checkOut)}`;
+}
+
+function truncate(text, max) {
+  if (!text) return "";
+  const clean = String(text).trim();
+  if (clean.length <= max) return clean;
+  return clean.slice(0, max - 1).trimEnd() + "…";
 }
 
 function getApartmentById(id) {
@@ -136,6 +94,7 @@ function renderApartments() {
       <div class="card-body">
         <h3 class="card-title">${a.name}</h3>
         <p class="card-meta">${a.short}</p>
+        ${a.description ? `<p class="card-meta">${truncate(a.description, 180)}</p>` : ''}
         <p class="card-meta">From <strong>${formatCurrency(a.pricePerNight)}</strong> / night · Min ${a.minNights} nights</p>
         <div class="card-actions">
           <a class="btn btn-light" href="#booking" data-apartment="${a.id}">Book ${a.name}</a>
