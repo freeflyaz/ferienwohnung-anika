@@ -8,16 +8,19 @@
 
 const CONTACT_EMAIL = "ferienwohnung-anika@t-online.de";
 
-// Apartments configuration – populated from scraped data (Seestadel)
+// Apartments configuration – three available apartments
 const APARTMENTS = [
   {
     id: "seestadel",
     name: "Seestadel – Seestraße",
-    short: "Sleeps 2 · 40 m²",
-    pricePerNight: 120,
+    short: "Sleeps 3 · 46 m²",
+    pricePerNight: 125,
+    pricePerNightLowSeason: 99,
     cleaningFee: 45,
     minNights: 3,
-    maxGuests: 2,
+    maxGuests: 3,
+    bedrooms: 1,
+    sqm: 46,
     photos: [
       { src: "assets/seestadel/img-01.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-02.jpg", alt: "Seestadel – Seestraße" },
@@ -31,8 +34,62 @@ const APARTMENTS = [
       { src: "assets/seestadel/img-10.jpg", alt: "Seestadel – Seestraße" }
     ],
     blockedDates: [],
-    description: "* Die Preise gelten für 1-2 Personen incl. Endreinigung: Ferienwohnung \"Seestadel\" (Fewo für 1-3 Personen (46qm) im 1.Stock) - 1 Schlafzimmer + Ausziehcouch im Wohnzimmer Hauptsaison 2025 125 €/Nacht für 1-2 Personen",
+    description: "Ferienwohnung \"Seestadel\" (46 sqm) im 1.Stock für 1-3 Personen - 1 Schlafzimmer + Ausziehcouch im Wohnzimmer. Hauptsaison €125/Nacht, Nebensaison €99/Nacht für 1-3 Personen.",
     source: "https://ferienwohnung-anika.de/Unsere-Wohnungen/Seestadel-in-der-Seestrasse",
+  },
+  {
+    id: "dorfstadel",
+    name: "Dorfstadel",
+    short: "Sleeps 5 · 100 m²",
+    pricePerNight: 100,
+    pricePerNightLowSeason: 90,
+    cleaningFee: 45,
+    minNights: 3,
+    maxGuests: 5,
+    bedrooms: 2,
+    sqm: 100,
+    photos: [
+      { src: "assets/dorfstadel/img-01.jpg", alt: "Dorfstadel – exterior" },
+      { src: "assets/dorfstadel/img-02.jpg", alt: "Dorfstadel – living room" },
+      { src: "assets/dorfstadel/img-03.jpg", alt: "Dorfstadel – bedroom 1" },
+      { src: "assets/dorfstadel/img-04.jpg", alt: "Dorfstadel – bedroom 2" },
+      { src: "assets/dorfstadel/img-05.jpg", alt: "Dorfstadel – kitchen" },
+      { src: "assets/dorfstadel/img-06.jpg", alt: "Dorfstadel – bathroom" },
+      { src: "assets/dorfstadel/img-07.jpg", alt: "Dorfstadel – dining area" },
+      { src: "assets/dorfstadel/img-08.jpg", alt: "Dorfstadel – view" },
+      { src: "assets/dorfstadel/img-09.jpg", alt: "Dorfstadel – detail" },
+      { src: "assets/dorfstadel/img-10.jpg", alt: "Dorfstadel – balcony" }
+    ],
+    blockedDates: [],
+    description: "Geräumige Ferienwohnung \"Dorfstadel\" (100 sqm) für 1-5 Personen mit 2 Schlafzimmern. Hauptsaison €100/Nacht, Nebensaison €90/Nacht.",
+    source: "https://ferienwohnung-anika.de/Unsere-Wohnungen/Dorfstadel-im-Mitteldorf",
+  },
+  {
+    id: "bergwiesenstadel",
+    name: "Bergwiesenstadel",
+    short: "Sleeps 5 · 100 m²",
+    pricePerNight: 115,
+    pricePerNightLowSeason: 95,
+    cleaningFee: 45,
+    minNights: 3,
+    maxGuests: 5,
+    bedrooms: 2,
+    sqm: 100,
+    photos: [
+      { src: "assets/bergwiesenstadel/img-01.jpg", alt: "Bergwiesenstadel – exterior" },
+      { src: "assets/bergwiesenstadel/img-02.jpg", alt: "Bergwiesenstadel – living room" },
+      { src: "assets/bergwiesenstadel/img-03.jpg", alt: "Bergwiesenstadel – bedroom 1" },
+      { src: "assets/bergwiesenstadel/img-04.jpg", alt: "Bergwiesenstadel – bedroom 2" },
+      { src: "assets/bergwiesenstadel/img-05.jpg", alt: "Bergwiesenstadel – kitchen" },
+      { src: "assets/bergwiesenstadel/img-06.jpg", alt: "Bergwiesenstadel – bathroom" },
+      { src: "assets/bergwiesenstadel/img-07.jpg", alt: "Bergwiesenstadel – dining area" },
+      { src: "assets/bergwiesenstadel/img-08.jpg", alt: "Bergwiesenstadel – terrace" },
+      { src: "assets/bergwiesenstadel/img-09.jpg", alt: "Bergwiesenstadel – view" },
+      { src: "assets/bergwiesenstadel/img-10.jpg", alt: "Bergwiesenstadel – detail" }
+    ],
+    blockedDates: [],
+    description: "Moderne Ferienwohnung \"Bergwiesenstadel\" (100 sqm) für 1-5 Personen mit 2 Schlafzimmern. Hauptsaison €115/Nacht, Nebensaison €95/Nacht.",
+    source: "https://ferienwohnung-anika.de/Unsere-Wohnungen/Bergwiesenstadel-im-Mitteldorf",
   }
 ];
 
@@ -98,7 +155,7 @@ function renderApartments() {
         <div class="card-details">
           <div class="card-detail-item">
             <span>📏</span>
-            <span><strong>Size:</strong> 40 m²</span>
+            <span><strong>Size:</strong> ${a.sqm} m²</span>
           </div>
           <div class="card-detail-item">
             <span>👥</span>
@@ -106,11 +163,11 @@ function renderApartments() {
           </div>
           <div class="card-detail-item">
             <span>🏠</span>
-            <span><strong>Type:</strong> 1 bedroom + living room</span>
+            <span><strong>Type:</strong> ${a.bedrooms} bedroom${a.bedrooms > 1 ? 's' : ''} + living room</span>
           </div>
           <div class="card-detail-item">
-            <span>📍</span>
-            <span><strong>Floor:</strong> 1st floor</span>
+            <span>💰</span>
+            <span><strong>Price:</strong> €${a.pricePerNightLowSeason || a.pricePerNight}–${a.pricePerNight}/night</span>
           </div>
         </div>
         

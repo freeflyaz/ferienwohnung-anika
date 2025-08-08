@@ -228,7 +228,7 @@ def extract_text(soup: BeautifulSoup) -> dict:
 def scrape(url: str, out_dir: str) -> dict:
     resp = requests.get(url, headers=HEADERS, timeout=30)
     resp.raise_for_status()
-    soup = BeautifulSoup(resp.text, "lxml")
+    soup = BeautifulSoup(resp.text, "html.parser")
 
     # Gather images from multiple sources
     candidates = [u for u in iter_candidate_image_urls(soup, url) if is_likely_content_image(u)]
