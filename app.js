@@ -8,6 +8,22 @@
 
 const CONTACT_EMAIL = "ferienwohnung-anika@t-online.de";
 
+// Global gallery filter state
+let pendingGalleryFilter = null;
+
+// Function to apply gallery filter
+function applyGalleryFilter(apartmentId) {
+  const filterBtn = document.querySelector(`[data-filter="${apartmentId}"]`);
+  if (filterBtn) {
+    filterBtn.click();
+    // Smooth scroll to gallery
+    const gallerySection = document.getElementById('gallery');
+    if (gallerySection) {
+      gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+}
+
 // Apartments configuration – three available apartments
 const APARTMENTS = [
   {
@@ -176,19 +192,32 @@ function renderApartments() {
         
         <div class="card-actions">
           <a class="btn btn-primary" href="#booking" data-apartment="${a.id}">Book now</a>
-          <a class="btn btn-light" href="#gallery" data-gallery-filter="${a.id}">View photos</a>
+          <button class="btn btn-light" data-gallery-filter="${a.id}">View photos</button>
         </div>
       </div>
     </article>
   `).join("");
 
-  // Wire buttons to preselect apartment
+  // Wire booking buttons to preselect apartment
   container.querySelectorAll('[data-apartment]').forEach((btn) => {
     btn.addEventListener('click', (e) => {
       const id = e.currentTarget.getAttribute('data-apartment');
       const select = document.getElementById('apartmentSelect');
       select.value = id;
       select.dispatchEvent(new Event('change'));
+    });
+  });
+
+  // Wire gallery filter buttons to filter photos
+  container.querySelectorAll('[data-gallery-filter]').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const apartmentId = e.currentTarget.getAttribute('data-gallery-filter');
+      
+      // Use setTimeout to ensure gallery is rendered
+      setTimeout(() => {
+        applyGalleryFilter(apartmentId);
+      }, 100);
     });
   });
 }
