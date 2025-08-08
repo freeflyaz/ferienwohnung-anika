@@ -67,10 +67,14 @@ img { max-width: 100%; display: block; }
 
 .section { padding: 80px 0; }
 .section-muted { background: var(--neutral-50); }
+.section-features { padding-bottom: 60px; }
 
 @media (max-width: 480px) {
   .section { 
     padding: 48px 0; 
+  }
+  .section-features { 
+    padding-bottom: 32px; 
   }
 }
 .section-title {
