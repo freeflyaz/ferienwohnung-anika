@@ -372,9 +372,9 @@ const APARTMENTS = [
     bedrooms: 1,
     sqm: 46,
     photos: [
+      { src: "assets/seestadel/img-03.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-01.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-02.jpg", alt: "Seestadel – Seestraße" },
-      { src: "assets/seestadel/img-03.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-04.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-05.jpg", alt: "Seestadel – Seestraße" },
       { src: "assets/seestadel/img-06.jpg", alt: "Seestadel – Seestraße" },
