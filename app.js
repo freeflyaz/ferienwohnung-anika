@@ -94,11 +94,32 @@ function renderApartments() {
       <div class="card-body">
         <h3 class="card-title">${a.name}</h3>
         <p class="card-meta">${a.short}</p>
-        ${a.description ? `<p class="card-meta">${truncate(a.description, 180)}</p>` : ''}
-        <p class="card-meta">From <strong>${formatCurrency(a.pricePerNight)}</strong> / night · Min ${a.minNights} nights</p>
+        
+        <div class="card-details">
+          <div class="card-detail-item">
+            <span>📏</span>
+            <span><strong>Size:</strong> 40 m²</span>
+          </div>
+          <div class="card-detail-item">
+            <span>👥</span>
+            <span><strong>Sleeps:</strong> Up to ${a.maxGuests} guests</span>
+          </div>
+          <div class="card-detail-item">
+            <span>🏠</span>
+            <span><strong>Type:</strong> 1 bedroom + living room</span>
+          </div>
+          <div class="card-detail-item">
+            <span>📍</span>
+            <span><strong>Floor:</strong> 1st floor</span>
+          </div>
+        </div>
+        
+        <p class="card-price">From ${formatCurrency(a.pricePerNight)} / night</p>
+        <p class="card-meta">Minimum stay: ${a.minNights} nights • Includes cleaning</p>
+        
         <div class="card-actions">
-          <a class="btn btn-light" href="#booking" data-apartment="${a.id}">Book ${a.name}</a>
-          <a class="btn" href="#gallery" data-gallery-filter="${a.id}">View photos</a>
+          <a class="btn btn-primary" href="#booking" data-apartment="${a.id}">Book now</a>
+          <a class="btn btn-light" href="#gallery" data-gallery-filter="${a.id}">View photos</a>
         </div>
       </div>
     </article>
