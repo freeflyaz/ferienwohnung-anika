@@ -1,0 +1,54 @@
+{
+  "id": "seestadel",
+  "name": "Seestadel – Seestraße",
+  "short": "Sleeps 2 · 40 m²",
+  "pricePerNight": 120.0,
+  "cleaningFee": 45.0,
+  "minNights": 3,
+  "maxGuests": 2,
+  "photos": [
+    {
+      "src": "assets/seestadel/img-01.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-02.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-03.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-04.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-05.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-06.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-07.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-08.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-09.jpg",
+      "alt": "Seestadel – Seestraße"
+    },
+    {
+      "src": "assets/seestadel/img-10.jpg",
+      "alt": "Seestadel – Seestraße"
+    }
+  ],
+  "blockedDates": [],
+  "description": "* Die Preise gelten für 1-2 Personen incl. Endreinigung: Ferienwohnung \"Seestadel\" (Fewo für 1-3 Personen (46qm) im 1.Stock) - 1 Schlafzimmer + Ausziehcouch im Wohnzimmer Hauptsaison 2025 125 €/Nacht für 1-2 Personen",
+  "source": "https://ferienwohnung-anika.de/Unsere-Wohnungen/Seestadel-in-der-Seestrasse"
+}
