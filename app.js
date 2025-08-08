@@ -6,7 +6,8 @@
   - Price calculation and mailto request
 */
 
-const CONTACT_EMAIL = "gabemata@gmail.com"; // Test email
+const CONTACT_EMAIL = "gabemata@gmail.com"; // Test email (for form submissions)
+const DISPLAY_EMAIL = "ferienwohnung-anika@t-online.de"; // Display email
 
 // EmailJS configuration - You'll need to sign up at https://www.emailjs.com
 // and get these values from your account
@@ -859,8 +860,8 @@ Sent from Haus Säuling website.`
 // ------- Init -------
 function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
-  document.getElementById('contactEmail').href = `mailto:${CONTACT_EMAIL}`;
-  document.getElementById('contactEmail').textContent = CONTACT_EMAIL;
+  document.getElementById('contactEmail').href = `mailto:${DISPLAY_EMAIL}`;
+  document.getElementById('contactEmail').textContent = DISPLAY_EMAIL;
 
   // Initialize EmailJS (if configured)
   if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
