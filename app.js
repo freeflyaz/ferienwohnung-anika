@@ -6,7 +6,13 @@
   - Price calculation and mailto request
 */
 
-const CONTACT_EMAIL = "ferienwohnung-anika@t-online.de";
+const CONTACT_EMAIL = "gabemata@gmail.com"; // Test email
+
+// EmailJS configuration - You'll need to sign up at https://www.emailjs.com
+// and get these values from your account
+const EMAILJS_SERVICE_ID = "service_q03fx2g"; // e.g., "service_abc123"
+const EMAILJS_TEMPLATE_ID = "template_0v1neq4"; // e.g., "template_xyz789"
+const EMAILJS_PUBLIC_KEY = "DB9i8B6DaW3FryZcH"; // e.g., "user_123abc..."
 
 // Global gallery filter state
 let pendingGalleryFilter = null;
@@ -659,7 +665,7 @@ function handleApartmentChange() {
   updateSummary();
 }
 
-function handleRequestBooking() {
+async function handleRequestBooking() {
   const select = document.getElementById('apartmentSelect');
   const adults = Number(document.getElementById('adults').value || '0');
   const children = Number(document.getElementById('children').value || '0');
@@ -671,8 +677,25 @@ function handleRequestBooking() {
   const apt = getApartmentById(select.value);
   const { checkIn, checkOut, nights } = parseRange(picker?.selectedDates || []);
 
-  if (!name || !email || nights <= 0) {
-    alert('Please select valid dates and enter your name and email.');
+  // Validation with specific messages
+  if (!name) {
+    alert('Please enter your name.');
+    document.getElementById('name').focus();
+    return;
+  }
+  if (!email) {
+    alert('Please enter your email address.');
+    document.getElementById('email').focus();
+    return;
+  }
+  if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+    alert('Please enter a valid email address.');
+    document.getElementById('email').focus();
+    return;
+  }
+  if (nights <= 0) {
+    alert('Please select your check-in and check-out dates.');
+    document.getElementById('dateRange').focus();
     return;
   }
   if (nights < apt.minNights) {
@@ -681,26 +704,96 @@ function handleRequestBooking() {
   }
 
   const { nightly, cleaning, subtotal, total } = computePrice(apt, nights);
+  
+  // Check if EmailJS is configured
+  if (EMAILJS_SERVICE_ID === "YOUR_SERVICE_ID") {
+    // Fallback to mailto if EmailJS is not configured
+    sendViaMailto(apt, name, email, phone, message, adults, children, checkIn, checkOut, nights, nightly, cleaning, subtotal, total);
+    return;
+  }
+
+  // Disable button and show loading state
+  const btn = document.getElementById('requestBtn');
+  const originalText = btn.textContent;
+  btn.disabled = true;
+  btn.textContent = currentLanguage === 'de' ? 'Wird gesendet...' : 'Sending...';
+
+  try {
+    // Send email using EmailJS
+    const templateParams = {
+      to_email: CONTACT_EMAIL,
+      from_name: name,
+      from_email: email,
+      phone: phone || 'Not provided',
+      apartment_name: apt.name,
+      adults: adults,
+      children: children,
+      check_in: formatDateRange(checkIn, checkOut).split(' → ')[0],
+      check_out: formatDateRange(checkIn, checkOut).split(' → ')[1],
+      nights: nights,
+      nightly_rate: formatCurrency(nightly),
+      cleaning_fee: formatCurrency(cleaning),
+      subtotal: formatCurrency(subtotal),
+      total: formatCurrency(total),
+      message: message || 'No additional message',
+      booking_date: new Date().toLocaleDateString()
+    };
+
+    const response = await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams);
+    
+    if (response.status === 200) {
+      // Success!
+      alert(currentLanguage === 'de' 
+        ? 'Ihre Buchungsanfrage wurde erfolgreich gesendet! Wir werden uns innerhalb von 24 Stunden bei Ihnen melden.' 
+        : 'Your booking request has been sent successfully! We will contact you within 24 hours.');
+      
+      // Clear form
+      document.getElementById('bookingForm').reset();
+      picker.clear();
+      updateSummary();
+    }
+  } catch (error) {
+    console.error('Email send failed:', error);
+    alert(currentLanguage === 'de'
+      ? 'Es gab ein Problem beim Senden Ihrer Anfrage. Bitte versuchen Sie es erneut oder kontaktieren Sie uns direkt.'
+      : 'There was a problem sending your request. Please try again or contact us directly.');
+  } finally {
+    // Re-enable button
+    btn.disabled = false;
+    btn.textContent = originalText;
+  }
+}
+
+// Fallback function for mailto
+function sendViaMailto(apt, name, email, phone, message, adults, children, checkIn, checkOut, nights, nightly, cleaning, subtotal, total) {
   const body = encodeURIComponent(
-`Booking request – Haus Säuling\n\n` +
-`Name: ${name}\n` +
-`Email: ${email}\n` +
-`Phone: ${phone || '-'}\n` +
-`Apartment: ${apt.name}\n` +
-`Guests: ${adults} adults, ${children} children\n` +
-`Dates: ${formatDateRange(checkIn, checkOut)} (${nights} nights)\n\n` +
-`Price summary:\n` +
-`  Nightly rate: ${formatCurrency(nightly)}\n` +
-`  Cleaning: ${formatCurrency(cleaning)}\n` +
-`  Subtotal: ${formatCurrency(subtotal)}\n` +
-`  Total: ${formatCurrency(total)}\n\n` +
-(message ? `Message:\n${message}\n\n` : '') +
-`Sent from Haus Säuling website.`
+`Booking request – Haus Säuling
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone || '-'}
+Apartment: ${apt.name}
+Guests: ${adults} adults, ${children} children
+Dates: ${formatDateRange(checkIn, checkOut)} (${nights} nights)
+
+Price summary:
+  Nightly rate: ${formatCurrency(nightly)}
+  Cleaning: ${formatCurrency(cleaning)}
+  Subtotal: ${formatCurrency(subtotal)}
+  Total: ${formatCurrency(total)}
+
+${message ? `Message:\n${message}\n\n` : ''}
+Sent from Haus Säuling website.`
   );
 
   const subject = encodeURIComponent(`Booking request – ${apt.name} (${formatDateRange(checkIn, checkOut)})`);
   const mailto = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
+  
   window.location.href = mailto;
+  
+  setTimeout(() => {
+    alert('Your email client should now be open with your booking request. Please send the email to complete your booking request. If your email client did not open, please email us directly at: ' + CONTACT_EMAIL);
+  }, 500);
 }
 
 // ------- Init -------
@@ -708,6 +801,11 @@ function init() {
   document.getElementById('year').textContent = new Date().getFullYear();
   document.getElementById('contactEmail').href = `mailto:${CONTACT_EMAIL}`;
   document.getElementById('contactEmail').textContent = CONTACT_EMAIL;
+
+  // Initialize EmailJS (if configured)
+  if (typeof emailjs !== 'undefined' && EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+    emailjs.init(EMAILJS_PUBLIC_KEY);
+  }
 
   // Initialize language
   initializeLanguage();
