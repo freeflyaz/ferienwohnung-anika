@@ -28,12 +28,17 @@
           <span class="brand-text">Haus Säuling</span>
         </a>
         <nav class="nav" aria-label="Primary">
-          <a href="#apartments">Apartments</a>
-          <a href="#gallery">Gallery</a>
-          <a href="#booking">Booking</a>
-          <a href="#contact">Contact</a>
+          <a href="#apartments" data-i18n="nav.apartments">Apartments</a>
+          <a href="#gallery" data-i18n="nav.gallery">Gallery</a>
+          <a href="#booking" data-i18n="nav.booking">Booking</a>
+          <a href="#contact" data-i18n="nav.contact">Contact</a>
         </nav>
-        <a class="btn btn-primary btn-small" href="#booking">Book now</a>
+        <a class="btn btn-primary btn-small" href="#booking" data-i18n="nav.bookNow">Book now</a>
+        <div class="language-switcher">
+          <button class="lang-btn active" data-lang="en">EN</button>
+          <span class="lang-divider">|</span>
+          <button class="lang-btn" data-lang="de">DE</button>
+        </div>
       </div>
     </header>
 
@@ -42,11 +47,11 @@
       <section class="hero" aria-label="Alpine holiday apartments">
         <div class="hero-media" role="img" aria-label="Mountain landscape near the Allgäu"></div>
         <div class="container hero-content">
-          <h1 class="hero-title">Alpine stays at Haus Säuling</h1>
-          <p class="hero-subtitle">Bright, modern Ferienwohnungen in the heart of the Allgäu.</p>
+          <h1 class="hero-title" data-i18n="hero.title">Alpine stays at Haus Säuling</h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">Bright, modern Ferienwohnungen in the heart of the Allgäu.</p>
           <div class="hero-cta">
-            <a href="#apartments" class="btn btn-light">View apartments</a>
-            <a href="#booking" class="btn btn-primary">Check availability</a>
+            <a href="#apartments" class="btn btn-light" data-i18n="hero.viewApartments">View apartments</a>
+            <a href="#booking" class="btn btn-primary" data-i18n="hero.checkAvailability">Check availability</a>
           </div>
         </div>
       </section>
@@ -58,29 +63,29 @@
             <li>
               <div class="icon">🏔️</div>
               <div class="feature-text">
-                <h3>Allgäu location</h3>
-                <p>Trails, lakes and castles within easy reach.</p>
+                <h3 data-i18n="features.location">Allgäu location</h3>
+                <p data-i18n="features.locationDesc">Trails, lakes and castles within easy reach.</p>
               </div>
             </li>
             <li>
               <div class="icon">🛏️</div>
               <div class="feature-text">
-                <h3>Modern comfort</h3>
-                <p>Fresh interiors, fully equipped kitchenettes.</p>
+                <h3 data-i18n="features.comfort">Modern comfort</h3>
+                <p data-i18n="features.comfortDesc">Fresh interiors, fully equipped kitchenettes.</p>
               </div>
             </li>
             <li>
               <div class="icon">🌐</div>
               <div class="feature-text">
-                <h3>Fast Wi‑Fi</h3>
-                <p>Stay connected while you unwind.</p>
+                <h3 data-i18n="features.wifi">Fast Wi‑Fi</h3>
+                <p data-i18n="features.wifiDesc">Stay connected while you unwind.</p>
               </div>
             </li>
             <li>
               <div class="icon">🚗</div>
               <div class="feature-text">
-                <h3>Easy access</h3>
-                <p>On‑site parking and self check‑in.</p>
+                <h3 data-i18n="features.access">Easy access</h3>
+                <p data-i18n="features.accessDesc">On‑site parking and self check‑in.</p>
               </div>
             </li>
           </ul>
@@ -91,8 +96,8 @@
       <section id="apartments" class="section">
         <div class="container">
           <div class="section-head">
-            <h2 class="section-title">Apartments</h2>
-            <p class="section-desc">Choose the perfect base for hiking, biking and lake days.</p>
+            <h2 class="section-title" data-i18n="section.apartments">Apartments</h2>
+            <p class="section-desc" data-i18n="section.apartmentsDesc">Choose the perfect base for hiking, biking and lake days.</p>
           </div>
           <div id="apartmentCards" class="cards"></div>
         </div>
@@ -102,8 +107,8 @@
       <section class="section section-muted">
         <div class="container">
           <div class="section-head">
-            <h2 class="section-title">What's Included</h2>
-            <p class="section-desc">All apartments feature modern amenities for a comfortable stay.</p>
+            <h2 class="section-title" data-i18n="section.whatsIncluded">What's Included</h2>
+            <p class="section-desc" data-i18n="section.whatsIncludedDesc">All apartments feature modern amenities for a comfortable stay.</p>
           </div>
           <div class="features">
             <div class="feature-item">
@@ -152,7 +157,7 @@
             <p class="section-desc">Photos from our apartments and the beautiful Allgäu surroundings.</p>
           </div>
           <div class="gallery-filters">
-            <button class="filter-btn active" data-filter="all">All Photos</button>
+            <button class="filter-btn active" data-filter="all" data-i18n="gallery.allPhotos">All Photos</button>
             <button class="filter-btn" data-filter="seestadel">Seestadel</button>
             <button class="filter-btn" data-filter="dorfstadel">Dorfstadel</button>
             <button class="filter-btn" data-filter="bergwiesenstadel">Bergwiesenstadel</button>
