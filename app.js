@@ -195,35 +195,69 @@ function renderApartments() {
 
 function renderGallery() {
   const grid = document.getElementById("galleryGrid");
-  const all = [
-    ...APARTMENTS.flatMap(a => a.photos.map(p => ({...p, apartmentId: a.id, caption: `${a.name}`}))),
-    ...AREA_PHOTOS
+  const allPhotos = [
+    ...APARTMENTS.flatMap(a => a.photos.map(p => ({...p, apartmentId: a.id, apartmentName: a.name}))),
+    ...AREA_PHOTOS.map(p => ({...p, apartmentId: 'area', apartmentName: 'Surroundings'}))
   ];
 
-  grid.innerHTML = all.map((p, i) => `
-    <a href="${p.src}" data-index="${i}" data-caption="${p.caption || ''}">
-      <img src="${p.src}" alt="${p.alt || 'Photo'}" loading="lazy" />
-    </a>
-  `).join("");
+  // Function to render photos based on filter
+  function renderPhotos(filter = 'all') {
+    const filteredPhotos = filter === 'all' 
+      ? allPhotos 
+      : allPhotos.filter(p => p.apartmentId === filter);
+    
+    grid.innerHTML = filteredPhotos.map((p, i) => `
+      <a href="${p.src}" data-index="${i}" data-caption="${p.apartmentName}" class="gallery-item" data-apartment="${p.apartmentId}">
+        <img src="${p.src}" alt="${p.alt || 'Photo'}" loading="lazy" />
+        ${p.apartmentName ? `<span class="gallery-badge">${p.apartmentName}</span>` : ''}
+      </a>
+    `).join("");
+    
+    // Re-attach lightbox handlers
+    attachLightboxHandlers();
+  }
 
-  // Lightbox
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightboxImg');
-  const lightboxCaption = document.getElementById('lightboxCaption');
-  const lightboxClose = document.getElementById('lightboxClose');
+  // Initial render
+  renderPhotos('all');
 
-  grid.querySelectorAll('a').forEach((a) => {
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      const href = a.getAttribute('href');
-      const caption = a.getAttribute('data-caption') || '';
-      lightboxImg.src = href;
-      lightboxCaption.textContent = caption;
-      lightbox.classList.add('open');
-      lightbox.setAttribute('aria-hidden', 'false');
+  // Filter buttons
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const filter = e.target.getAttribute('data-filter');
+      
+      // Update active state
+      filterButtons.forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      
+      // Render filtered photos
+      renderPhotos(filter);
     });
   });
 
+  function attachLightboxHandlers() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    grid.querySelectorAll('a').forEach((a) => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        const caption = a.getAttribute('data-caption') || '';
+        lightboxImg.src = href;
+        lightboxCaption.textContent = caption;
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+      });
+    });
+  }
+
+  // Set up lightbox close handlers (only once)
+  const lightbox = document.getElementById('lightbox');
+  const lightboxClose = document.getElementById('lightboxClose');
+  
   lightboxClose.addEventListener('click', () => {
     lightbox.classList.remove('open');
     lightbox.setAttribute('aria-hidden', 'true');
