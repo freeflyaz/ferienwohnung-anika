@@ -19,7 +19,7 @@ const EMAILJS_PUBLIC_KEY = "DB9i8B6DaW3FryZcH"; // e.g., "user_123abc..."
 let pendingGalleryFilter = null;
 
 // Current language
-let currentLanguage = localStorage.getItem('language') || 'en';
+let currentLanguage = localStorage.getItem('language') || 'de';
 
 // Translations
 const translations = {
