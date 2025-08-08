@@ -127,7 +127,11 @@ const translations = {
     'included.support': 'Local Support',
     'included.supportDesc': 'Your hosts Christine & Roland Pfeiffer are available to assist with any questions or needs during your stay. Local expertise and recommendations included.',
     'included.pricing': 'Pricing Information',
-    'included.pricingDesc': 'Prices vary by season (high season: peak months, low season: off-peak). Additional fees: €15/night per extra person, €10/night surcharge for stays under 5 nights. Tourist tax: €1.90/adult, €0.95/child per night. Washing machine/dryer available for €5.00 per cycle.',
+    'included.pricingItem1': 'Prices shown are per night and include cleaning service',
+    'included.pricingItem2': 'High season rates apply during peak periods (summer and holidays)',
+    'included.pricingItem3': 'Low season rates available during off-peak times',
+    'included.pricingItem4': 'Minimum stay: 3 nights for all apartments',
+    'included.pricingItem5': 'Local tourist tax may apply and is paid directly to the municipality',
     
     // Footer
     'footer.impressum': 'Impressum',
@@ -239,7 +243,11 @@ const translations = {
     'included.support': 'Lokale Unterstützung',
     'included.supportDesc': 'Ihre Gastgeber Christine & Roland Pfeiffer stehen Ihnen bei Fragen oder Bedürfnissen während Ihres Aufenthalts zur Verfügung. Lokale Expertise und Empfehlungen inklusive.',
     'included.pricing': 'Preisinformationen',
-    'included.pricingDesc': 'Die Preise variieren je nach Saison (Hauptsaison: Spitzenmonate, Nebensaison: Nebenmonate). Zusätzliche Gebühren: 15 €/Nacht pro zusätzlicher Person, 10 €/Nacht Aufschlag für Aufenthalte unter 5 Nächten. Kurtaxe: 1,90 €/Erwachsener, 0,95 €/Kind pro Nacht. Waschmaschine/Trockner für 5,00 € pro Waschgang verfügbar.',
+    'included.pricingItem1': 'Die angezeigten Preise sind pro Nacht und beinhalten die Endreinigung',
+    'included.pricingItem2': 'Hauptsaisonpreise gelten während der Hochsaison (Sommer und Feiertage)',
+    'included.pricingItem3': 'Nebensaisonpreise sind in den ruhigeren Zeiten verfügbar',
+    'included.pricingItem4': 'Mindestaufenthalt: 3 Nächte für alle Wohnungen',
+    'included.pricingItem5': 'Die Kurtaxe kann anfallen und wird direkt an die Gemeinde gezahlt',
     
     // Footer
     'footer.impressum': 'Impressum',
