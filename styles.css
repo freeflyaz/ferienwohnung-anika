@@ -67,6 +67,12 @@ img { max-width: 100%; display: block; }
 
 .section { padding: 80px 0; }
 .section-muted { background: var(--neutral-50); }
+
+@media (max-width: 480px) {
+  .section { 
+    padding: 48px 0; 
+  }
+}
 .section-title {
   font-family: "Playfair Display", Georgia, serif;
   font-size: clamp(var(--text-3xl), 5vw, var(--text-4xl));
@@ -250,6 +256,32 @@ img { max-width: 100%; display: block; }
 .hero-subtitle { margin: 0; font-size: clamp(var(--text-lg), 2.2vw, var(--text-xl)); opacity: 0.95; }
 .hero-cta { margin-top: 32px; display: flex; gap: 16px; flex-wrap: wrap; }
 
+@media (max-width: 480px) {
+  .hero-content { 
+    padding: 48px 0; 
+    text-align: center;
+  }
+  .hero-title { 
+    font-size: var(--text-3xl);
+    margin: 0 0 12px;
+    line-height: 1.2;
+  }
+  .hero-subtitle { 
+    font-size: var(--text-base);
+    line-height: 1.4;
+  }
+  .hero-cta { 
+    margin-top: 24px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .hero-cta .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* Features */
 .features { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 20px; list-style: none; padding: 0; margin: 0; }
 .features li { display: flex; gap: 16px; align-items: flex-start; background: var(--white); border: 1px solid var(--neutral-100); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
@@ -257,6 +289,31 @@ img { max-width: 100%; display: block; }
 .features .icon { font-size: 28px; flex-shrink: 0; }
 .features .feature-text h3 { margin: 0 0 4px; font-size: var(--text-lg); font-weight: 600; color: var(--neutral-900); }
 .features .feature-text p { margin: 0; color: var(--neutral-600); font-size: var(--text-sm); }
+
+@media (max-width: 480px) {
+  .features { 
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .features li { 
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    text-align: center;
+    align-items: center;
+  }
+  .features .icon { 
+    font-size: 24px;
+  }
+  .features .feature-text h3 { 
+    font-size: var(--text-base);
+    margin: 0 0 4px;
+  }
+  .features .feature-text p { 
+    font-size: var(--text-xs);
+    line-height: 1.4;
+  }
+}
 
 @media (min-width: 840px) {
   .features { grid-template-columns: repeat(4, minmax(0,1fr)); }
